@@ -1,0 +1,15 @@
+{
+    "name": "Example",
+    "version": "0.1.0",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "public/components",
+        "vendor",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "bootstrap-sass-official": "3.1.1"
+    }
+}

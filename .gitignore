@@ -9,3 +9,5 @@ composer.lock
 .DS_Store
 Thumbs.db
 .idea
+npm-debug.log
+.sass-cache

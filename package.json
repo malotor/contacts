@@ -5,8 +5,8 @@
     "author": "Manel López",
     "devDependencies": {
         "bower": "^1.3.9",
-        "gulp": "~3.8.0",
-        "gulp-jshint": "~1.8.4",
+        "gulp": "*",
+        "gulp-jshint": "*",
         "gulp-uglify": "~1.0.1",
         "gulp-minify-css": "~0.3.8",
         "gulp-autoprefixer": "~1.0.1",

@@ -12,6 +12,10 @@
         "gulp-autoprefixer": "~1.0.1",
         "gulp-usemin": "~0.3.8",
         "gulp-concat": "~2.4.1",
-        "gulp-minify-html": "~0.1.5"
+        "gulp-minify-html": "~0.1.5",
+        "gulp-ruby-sass": "*",
+        "gulp-minify-css": "*",
+        "gulp-rename": "*",
+        "main-bower-files" : "*"
     }
 }

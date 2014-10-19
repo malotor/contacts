@@ -188,20 +188,6 @@ class Contact {
     return $this->email;
   }
 
-  /**
-   * @param mixed $friends
-   */
-  public function setFriends($friends) {
-    $this->friends = $friends;
-    return $this;
-  }
-
-  /**
-   * @return mixed
-   */
-  public function getFriends() {
-    return $this->friends;
-  }
 
   /**
    * @param mixed $gender
@@ -384,6 +370,13 @@ class Contact {
   }
 
 
+  public function addFriend($contact) {
+    $this->friends[] = $contact;
+  }
+
+  public function getFriends() {
+    return $this->friends;
+  }
 
 
 } 

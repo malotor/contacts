@@ -8,9 +8,12 @@
 
 namespace malotor\contacts;
 
+//Todo rename. Better JsonParser.
 class JsonFileReader extends FileReader {
+
   public function getContent() {
     $rawContent = parent::getContent();
     return json_decode($rawContent);
   }
+
 } 

@@ -1,34 +1,22 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: manel
- * Date: 19/10/14
- * Time: 19:54
- */
 
 namespace malotor\contacts;
-
 
 class ContactDAO extends Singleton {
   protected $contacts;
 
   protected function __construct()
   {
-
+    //TODO decoupling file and FileReader. Service container
     $file = base_path() . "/app/data/contactos.json";
 
     $JsonfileReader = new JsonFileReader($file);
 
-    $contactsObject = $JsonfileReader->getContent();
-
-    foreach($contactsObject as $contactObject) {
-
-      $this->contacts[] = $this->createContact($contactObject);
-    }
+    $this->contacts = $JsonfileReader->getContent();
 
   }
 
-  private function createContact($contactObject) {
+  private function createContactFromObject($contactObject) {
     $contact = new Contact();
 
     $contact->setId($contactObject->id)
@@ -53,10 +41,41 @@ class ContactDAO extends Singleton {
 
   public function getContact($guid) {
     foreach($this->contacts as $contact) {
-      if ($contact->getGuid() == $guid) {
-        return $contact;
+      if ($contact->guid == $guid) {
+        return $this->createContactFromObject($contact);
       }
     }
+  }
+
+  public function getAllContacts() {
+    $result = array();
+    foreach($this->contacts as $contact) {
+      $result[] = $this->createContactFromObject($contact);
+    }
+    return $result;
+  }
+
+  //TODO Single responsibility. Search must be in another "repository" class
+  //TODO duplicate code refactor
+  public function searchByName($name) {
+    $result = array();
+    foreach($this->contacts as $contact) {
+      if (preg_match('/'.$name.'/',$contact->name)) {
+
+        $result[] = $this->createContactFromObject($contact);
+      }
+    }
+    return $result;
+  }
+
+  public function searchByGender($gender) {
+    $result = array();
+    foreach($this->contacts as $contact) {
+      if ($contact->gender == $gender ) {
+        $result[] = $this->createContactFromObject($contact);
+      }
+    }
+    return $result;
   }
 
 }

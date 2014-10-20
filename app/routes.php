@@ -11,7 +11,15 @@
 |
 */
 
+use malotor\contacts\ContactDAO;
+
 Route::get('/', function()
 {
-	return View::make('frontpage',  array('name' => 'Manel'));
+
+  $contactDAO = ContactDAO::getInstance();
+
+  $contacts = $contactDAO->getAllContacts();
+
+  return View::make('frontpage',  array('contacts' => $contacts));
+
 });

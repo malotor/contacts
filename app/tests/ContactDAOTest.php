@@ -13,11 +13,9 @@ class ContactDAOTest extends TestCase {
 
     $contact = $contactDAO->getContact($guid);
 
-    $this->assertEquals( $contact->getName(), "Levy Shepard");
+    $this->assertEquals( $contact->name, "Levy Shepard");
 
   }
-
-
 
   public function testGetAllContact()
   {
@@ -26,8 +24,8 @@ class ContactDAOTest extends TestCase {
 
     $contacts = $contactDAO->getAllContacts();
 
-    $this->assertEquals( $contacts[0]->getName(), "Levy Shepard");
-    $this->assertEquals( $contacts[1]->getName(), "Antonia Ferguson");
+    $this->assertEquals( $contacts[0]->name, "Levy Shepard");
+    $this->assertEquals( $contacts[1]->name, "Antonia Ferguson");
   }
 
 
@@ -38,7 +36,7 @@ class ContactDAOTest extends TestCase {
 
     $contacts = $contactDAO->searchByName("Levy Shepard");
 
-    $this->assertEquals( $contacts[0]->getName(), "Levy Shepard");
+    $this->assertEquals( $contacts[0]->name, "Levy Shepard");
 
   }
 
@@ -49,8 +47,8 @@ class ContactDAOTest extends TestCase {
 
     $contacts = $contactDAO->searchByGender("male");
 
-    $this->assertEquals( $contacts[0]->getName(), "Levy Shepard");
-    $this->assertEquals( $contacts[1]->getName(), "Randall Blevins");
+    $this->assertEquals( $contacts[0]->name, "Levy Shepard");
+    $this->assertEquals( $contacts[1]->name, "Randall Blevins");
 
 
   }

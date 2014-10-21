@@ -15,7 +15,7 @@ class ContactDAO extends Singleton {
     $this->contacts = $JsonfileReader->getContent();
 
   }
-
+  /*
   private function createContactFromObject($contactObject) {
     $contact = new Contact();
 
@@ -38,11 +38,12 @@ class ContactDAO extends Singleton {
 
     return $contact;
   }
+  */
 
   public function getContact($guid) {
     foreach($this->contacts as $contact) {
       if ($contact->guid == $guid) {
-        return $this->createContactFromObject($contact);
+        return $contact;
       }
     }
   }
@@ -50,7 +51,7 @@ class ContactDAO extends Singleton {
   public function getAllContacts() {
     $result = array();
     foreach($this->contacts as $contact) {
-      $result[] = $this->createContactFromObject($contact);
+      $result[] = $contact;
     }
     return $result;
   }
@@ -62,7 +63,7 @@ class ContactDAO extends Singleton {
     foreach($this->contacts as $contact) {
       if (preg_match('/'.$name.'/',$contact->name)) {
 
-        $result[] = $this->createContactFromObject($contact);
+        $result[] = $contact;
       }
     }
     return $result;
@@ -72,10 +73,27 @@ class ContactDAO extends Singleton {
     $result = array();
     foreach($this->contacts as $contact) {
       if ($contact->gender == $gender ) {
-        $result[] = $this->createContactFromObject($contact);
+        $result[] = $contact;
       }
     }
     return $result;
   }
 
+  //TODO Refactor!
+  public function search($params) {
+    $result = array();
+    foreach($this->contacts as $contact) {
+      $all_checks = true;
+      foreach($params as $param_key => $paran_value) {
+        //The condition depends of parameter
+        if ($contact->{$param_key} != $paran_value ) {
+
+          $all_checks = false;
+        }
+      }
+      if ($all_checks) $result[] = $contact;
+
+    }
+    return $result;
+  }
 }

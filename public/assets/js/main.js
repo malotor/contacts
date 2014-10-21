@@ -1,69 +1,76 @@
+
+
 var table = {
-    init: function (tableId) {
-        this.table = $(tableId);
-    },
 
-    addRow: function (row) {
-       $.each(row, function (key, val) {
-            items.push("<li id='" + key + "'>" + val + "</li>");
+  init: function (tableId) {
+    this.table = $('#'+tableId);
+    this.table.find('a.openModal').click( this.detailContact );
+  },
 
-            var items = [];
-            $.each(data, function (key, val) {
-                items.push("<li id='" + key + "'>" + val + "</li>");
-            });
+  addRow: function (contact) {
+    console.log(contact);
+    var columns = [];
 
-            $("<tr/>", {
-                "class": "my-new-list",
-                html: items.join("")
-            }).appendTo(this.table.find("tbody"));
+    columns.push("<td>" + contact.picture + "</li>");
+    columns.push("<td>" + contact.name + "</li>");
+    columns.push("<td>" + contact.age + "</li>");
+    columns.push("<td>" + contact.balance + "</li>");
+    columns.push("<td>" + contact.email + "</li>");
 
-        });
-    },
+    $("<tr/>", {
+      html: columns.join("")
+    }).appendTo(this.table.find("tbody"));
 
-    removeRows: function () {
-        this.table.filter("tbody").html();
-    },
+  },
 
-    openDetailWindos: function () {
+  removeRows: function () {
+    this.table.find("tbody").empty();
+  },
 
-    }
+  detailContact: function (event) {
+    event.preventDefault();
+
+    $("#contact_detail_body").load( $(this).attr("href") ,function() {
+      $("#contact_detail").modal('show');
+    });
+  }
 }
 
+
 var searchForm = {
-    init: function (formId) {
-        this.form = $(formId);
-    },
+  init: function (formId) {
+    this.form = $("#" + formId);
+    this.form.find("#do_search").click(this.doSearch);
+  },
 
-    doSearch: function () {
+  doSearch: function (event) {
+    event.preventDefault();
+    var name = $('#name').val();
+    var gender = $('#gender').val();
 
-        var name = $('name').val();
-        var gender = $('gender').val();
+    $.post("./search_name", {
+      'name' : name
+    },function (data) {
 
-        $.getJSON("search.json", function (data) {
-            /*
-             var items = [];
-             $.each( data, function( key, val ) {
-             items.push( "<li id='" + key + "'>" + val + "</li>" );
-             });
-
-             $( "<ul/>", {
-             "class": "my-new-list",
-             html: items.join( "" )
-             }).appendTo( "body" );
-             */
+      var results = data.length;
+      if (results>0) {
+        table.removeRows();
+        $.each( data, function( key, contact ) {
+          table.addRow(contact)
         });
-    },
-
-
+      }
+    },'json');
+  },
 
 }
 
 var app = {
-    init: function () {
-        table.init("table_search");
-        searchForm.init("form_search");
-    }
+  init: function () {
+    table.init("table_search");
+    searchForm.init("form_search");
+  }
 }
 
-//Inits
-app.init();
+$(function () {
+  app.init();
+});

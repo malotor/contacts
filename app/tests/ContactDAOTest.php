@@ -22,34 +22,60 @@ class ContactDAOTest extends TestCase {
 
     $contactDAO = ContactDAO::getInstance();
 
+    //330
     $contacts = $contactDAO->getAllContacts();
 
     $this->assertEquals( $contacts[0]->name, "Levy Shepard");
     $this->assertEquals( $contacts[1]->name, "Antonia Ferguson");
   }
 
-
-  public function testGetSearchContactByName()
-  {
+  function testFindContact() {
 
     $contactDAO = ContactDAO::getInstance();
 
-    $contacts = $contactDAO->searchByName("Levy Shepard");
+    $params = array(
+      'name' => "Levy Shepard",
+    );
+
+    $contacts = $contactDAO->searchContacts($params);
 
     $this->assertEquals( $contacts[0]->name, "Levy Shepard");
 
-  }
+    $params = array(
+      'gender' => "male",
+    );
 
-  public function testGetSearchContactByGender()
-  {
-
-    $contactDAO = ContactDAO::getInstance();
-
-    $contacts = $contactDAO->searchByGender("male");
+    $contacts = $contactDAO->searchContacts($params);
 
     $this->assertEquals( $contacts[0]->name, "Levy Shepard");
     $this->assertEquals( $contacts[1]->name, "Randall Blevins");
 
+    $params = array(
+      'name' => "Levy Shepard",
+      'gender' => "male",
+    );
 
+    $contacts = $contactDAO->searchContacts($params);
+
+    $this->assertEquals( $contacts[0]->name, "Levy Shepard");
+    $this->assertEquals( count($contacts), 1 );
+
+
+    $params = array();
+
+    $contacts = $contactDAO->searchContacts($params);
+
+    $this->assertEquals( $contacts[0]->name, "Levy Shepard");
+    $this->assertEquals( $contacts[329]->name, "Teresa Hayden");
+    $this->assertEquals( count($contacts), 330 );
+
+
+    $params = array(
+      'name' => "Antonia Ferguson",
+      'gender' => "male",
+    );
+    $contacts = $contactDAO->searchContacts($params);
+
+    $this->assertEquals( count($contacts), 0);
   }
 }

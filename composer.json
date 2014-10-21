@@ -18,9 +18,9 @@
 			"app/database/seeds",
 			"app/tests/TestCase.php"
 		],
-        "psr-4": {
-            "malotor\\contacts\\": "app/src"
-        }
+    "psr-4": {
+        "malotor\\contacts\\": "app/src"
+    }
 	},
 	"scripts": {
 		"post-install-cmd": [

@@ -24,9 +24,10 @@
               <label for="gender" class="col-sm-2 control-label">Gender</label>
               <div class="col-sm-10">
 
-                <select class="form-control" placeholder="Gender">
-                  <option class="female">Female</option>
-                  <option class="male">Male</option>
+                <select class="form-control" id="gender" placeholder="Gender">
+                  <option value="" defaulselected></option>
+                  <option value="female">Female</option>
+                  <option value="male">Male</option>
                 </select>
               </div>
             </div>
@@ -39,10 +40,7 @@
         </div>
       </div>
     </div>
-
   </div>
-
-
 
   <table id="table_search" class="table table-bordered table-hover">
 
@@ -50,26 +48,12 @@
       <th>Picture</th>
       <th>Name</th>
       <th>Age</th>
-      <th>Balance</th>
       <th>Email</th>
+      <th>Sexo</th>
+      <th>Balance</th>
     </thead>
     <tbody>
-      @if (is_array($contacts))
 
-        @foreach ($contacts as $contact)
-        <tr>
-          <td><img src="{{ $contact->picture }}"></td>
-          <td><a href="{{ url('contact_detail/'.$contact->guid) }}" class="openModal">{{ $contact->name }}</a></td>
-          <td>{{ $contact->age }}</td>
-          <td>{{ $contact->balance }}</td>
-          <td>{{ $contact->email }}</td>
-        </tr>
-
-        @endforeach
-
-      @else
-        <div class="message">No contacts</div>
-      @endif
     </tbody>
   </table>
   <div class="modal fade" id="contact_detail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -79,7 +63,7 @@
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
           <h4 class="modal-title" id="myModalLabel">Contact Details</h4>
         </div>
-        <div id="contact_detail_body" class="modal-body">
+        <div id="contact_detail_body" class="modal-body row-fluid">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

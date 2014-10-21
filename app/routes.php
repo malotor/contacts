@@ -29,7 +29,6 @@ Route::get('contact_detail/{guid}', function($guid = null)
 
   $contactDAO = ContactDAO::getInstance();
 
-  //Todo if guid null musth thow exception
   $contact = $contactDAO->getContact($guid);
 
   return View::make('contact_detail',  array('contact' => $contact));
@@ -37,32 +36,17 @@ Route::get('contact_detail/{guid}', function($guid = null)
 });
 
 
-Route::post('search_name', function()
+Route::post('search', function()
 {
+  $search_params = array();
 
-  $name = Input::get('name');
-  $contacts = array();
+  if ( Input::get('name') !='' ) $search_params['name'] =  Input::get('name');
+  if ( Input::get('gender') !='' ) $search_params['gender'] =  Input::get('gender');
 
-  if ($name) {
-    $contactDAO = ContactDAO::getInstance();
-    //Todo if guid null musth thow exception
-    $contacts = $contactDAO->searchByName($name);
-  }
+  $contactDAO = ContactDAO::getInstance();
 
-  return (array) $contacts;
+  $contacts = $contactDAO->searchContacts($search_params);
 
-});
-
-Route::post('search_gender', function()
-{
-
-  $gender = Input::get('gender');
-  $contacts = array();
-
-  if ($gender) {
-    $contactDAO = ContactDAO::getInstance();
-    $contacts = $contactDAO->searchByGender($gender);
-  }
 
   return (array) $contacts;
 

@@ -50,27 +50,6 @@ var components = {
   }
 };
 
-function tableRow(columns) {
-  this.columns = columns;
-  this.render = function () {
-    var row = $("<tr/>");
-    this.columns.forEach(function (field) {
-      var column = new tableColumn(field);
-      row.append(column.render());
-    });
-    return row;
-  }
-}
-
-function tableColumn(field) {
-  this.field = field;
-  this.render = function () {
-    var column = $("<td/>");
-    column.append(this.field.render());
-    return column;
-  }
-}
-
 
 var table = {
 
@@ -79,11 +58,8 @@ var table = {
     this.update();
   },
 
-  update: function () {
-    var name = $('#name').val();
-    var gender = $('#gender').val();
-    console.log(name);
-    console.log(gender);
+  update: function (name, gender) {
+
     $.post("./search", {
       'name': name,
       'gender': gender
@@ -125,11 +101,25 @@ var table = {
   }
 }
 
+var form = {
+  init: function (formId) {
+    this.form = $('#' + formId);
+    this.form.submit(this.doAction);
+  },
+  setAction: function(callback) {
+    this.callback = callback;
+  },
+  doAction: function (callback) {
+    this.callback.call($('#name').val(),$('#gender').val());
+  }
+
+}
 
 var app = {
   init: function () {
     table.init("table_search");
-    $("#do_search").click(table.update);
+    form.init("form_search");
+    form.setAction(table.update);
   }
 }
 
